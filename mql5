@@ -1,0 +1,82 @@
+
+// Program: Golden Club
+// Developer: Forex Robot Easy Team
+// Website: forexroboteasy.com
+
+// Include necessary libraries
+#include <Trade\Trade.mqh>
+
+// Define constants
+#define ACCOUNT_BALANCE 200
+#define STOP_LOSS 20
+
+// Define main function
+void OnTick()
+{
+   // Get account balance
+   double balance = AccountInfoDouble(ACCOUNT_BALANCE);
+
+   // Check if balance is sufficient to run the software
+   if(balance < ACCOUNT_BALANCE)
+   {
+      Print('Insufficient balance to run the software. Minimum required balance: ', ACCOUNT_BALANCE);
+      return;
+   }
+
+   // Calculate entry point using 12 different strategies
+   double entryPrice = CalculateEntryPoint();
+
+   // Check if entry price is valid
+   if(entryPrice == 0)
+   {
+      Print('Invalid entry price. Skipping trade.');
+      return;
+   }
+
+   // Place trade with stop loss
+   if(!PlaceTrade(entryPrice))
+   {
+      Print('Failed to place trade. Skipping trade.');
+      return;
+   }
+
+   // Set stop loss for the trade
+   SetStopLoss(entryPrice - STOP_LOSS);
+
+   // Print trade details
+   Print('Trade executed successfully. Entry Price: ', entryPrice, ' Stop Loss: ', entryPrice - STOP_LOSS);
+}
+
+// Calculate entry point using 12 different strategies
+double CalculateEntryPoint()
+{
+   // Implement your strategy calculation here
+   // ...
+   // Return entry price
+   return 1.2345;
+}
+
+// Place trade with specified entry price
+bool PlaceTrade(double entryPrice)
+{
+   // Implement trade execution here
+   // ...
+   // Return true if trade is successful
+   return true;
+}
+
+// Set stop loss for the trade
+void SetStopLoss(double stopLossPrice)
+{
+   // Implement stop loss setting here
+   // ...
+   // Print stop loss details
+   Print('Stop Loss set at: ', stopLossPrice);
+}
+
+// Program entry point
+void OnStart()
+{
+   // Execute the main function
+   OnTick();
+}
